@@ -4,12 +4,11 @@ class EstateModel(models.Model):
     _name = "estate.property"
     # sampai baris sini sudah cukup buat bikin tabel
     _description = "Estate Property models"
-
-    name = fields.Char('Estate Name')
+    name = fields.Char('Estate Name', required=True)
     description = fields.Text('Estate Description')
     postcode = fields.Char('Postcode')
     date_availability = fields.Date('Availability Date')
-    expected_price = fields.Float('Expected Price')
+    expected_price = fields.Float('Expected Price', required=True)
     selling_price = fields.Float('Sell Price')
     bedrooms = fields.Integer('BedRooms')
     living_area = fields.Integer('Living Area')

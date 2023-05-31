@@ -8,4 +8,5 @@
 8. import each file
 9. restart server
 10. update module with these syntax python odoo-bin -r dbuser -w dbpassword --addons-path=addons -d mydb -u training_estate
-11. 
+11. create access right at folder security with file name ir.model.access.csv
+12. 
