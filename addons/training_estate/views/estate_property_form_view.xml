@@ -51,7 +51,8 @@
                         </page>
                         <page string="Other Info">
                             <group>
-
+                                <field name="user_id"/>
+                                <field name="partner_id"/>
                             </group>
                         </page>
                     </notebook>
