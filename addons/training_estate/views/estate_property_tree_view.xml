@@ -5,6 +5,7 @@
         <field name="model">estate.property</field>
         <field name="arch" type="xml"> <!--These part still unknown-->
             <tree string="Channel">
+                <field name="property_type_id"/>
                 <field name="name"/>
                 <field name="postcode"/>
                 <field name="bedrooms"/>

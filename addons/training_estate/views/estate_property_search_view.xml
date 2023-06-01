@@ -5,6 +5,7 @@
         <field name="model">estate.property</field>
         <field name="arch" type="xml">
             <search string="Search estate">
+                <field name="property_type_id"/>
                 <field name="name"/>
                 <field name="postcode"/>
                 <field name="expected_price"/>
@@ -17,6 +18,7 @@
                 <separator/>
                 <group expand="0" name="group_by" string="Group By">
                     <filter name="postcode" string="Postcode" domain="[]" context="{'group_by' : 'postcode'}" />
+                    <filter name="property_type_id" string="Property Type" domain="[]" context="{'group_by' : 'property_type_id'}" />
                 </group>
             </search>
         </field>
