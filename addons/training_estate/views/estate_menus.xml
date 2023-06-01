@@ -2,13 +2,30 @@
 <odoo>
     <menuitem 
         id="menu_root_estate" 
-        name="Real Estate">
-        <menuitem 
+        name="Real Estate"
+    />
+        <!--  Advertisement Menu  -->
+        <menuitem
             id="estate_advertisement_menu"
-            name="Advertisement">
-            <menuitem 
-                id="estate_property_menu_action" 
-                action="estate_property_action"/>
-        </menuitem>
-    </menuitem>
+            name="Advertisement"
+            parent="menu_root_estate"
+            sequence="1"
+        />
+            <menuitem
+                id="estate_property_menu_action"
+                parent="estate_advertisement_menu"
+                action="estate_property_action"
+            />
+        <!--  Settings Menu  -->
+        <menuitem
+            id="estate_setting_menu"
+            name="Settings"
+            parent="menu_root_estate"
+            sequence="2"
+        />
+            <menuitem
+                id="estate_property_types_menu_action"
+                parent="estate_setting_menu"
+                action="estate_property_type_action"
+            />
 </odoo>
