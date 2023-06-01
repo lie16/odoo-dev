@@ -7,12 +7,17 @@
             <form string="Estate Propertyt">
                 <header>
                     <!-- TODO these part is not functional-->
-                    <button name="action_set_won_rainbowman" string="Edit"
-                            type="object" class="oe_highlight" data-hotkey="w" title="Edit data"
-                            attrs="{'invisible': ['|','|', ('active','=',False), ('probability', '=', 100), ('type', '=', 'lead')]}"/>
-                    <button name="action_set_won_rainbowman" string="Create"
-                            type="object" class="oe_highlight" data-hotkey="w" title="Create data"
-                            attrs="{'invisible': ['|','|', ('active','=',False), ('probability', '=', 100), ('type', '=', 'lead')]}"/>
+<!--                    <button-->
+<!--                            name="action_edit_data"-->
+<!--                            string="Edit"-->
+<!--                            type="object"-->
+<!--                            class="oe_highlight"-->
+<!--                            data-hotkey="e" title="Edit data"-->
+<!--                            attrs="{'invisible': ['|','|', ('active','=',False), ('probability', '=', 100), ('type', '=', 'lead')]}"-->
+<!--                    />-->
+<!--                    <button name="action_set_won_rainbowman" string="Create"-->
+<!--                            type="object" class="oe_highlight" data-hotkey="w" title="Create data"-->
+<!--                            attrs="{'invisible': ['|','|', ('active','=',False), ('probability', '=', 100), ('type', '=', 'lead')]}"/>-->
                 </header>
                 <sheet>
                     <div class="oe_title mb24">
