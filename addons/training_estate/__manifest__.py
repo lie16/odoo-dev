@@ -9,9 +9,9 @@
     # data files always loaded at installation
     'data': [
         'security/ir.model.access.csv',
-        
         'views/estate_menus.xml',
         'views/estate_property_form_view.xml',
+        'views/estate_property_offer_view.xml',
         'views/estate_property_search_view.xml',
         'views/estate_property_tag_action.xml',
         'views/estate_property_tag_form_view.xml',
