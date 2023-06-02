@@ -19,6 +19,8 @@
                 <group expand="0" name="group_by" string="Group By">
                     <filter name="postcode" string="Postcode" domain="[]" context="{'group_by' : 'postcode'}" />
                     <filter name="property_type_id" string="Property Type" domain="[]" context="{'group_by' : 'property_type_id'}" />
+                    <filter name="user_id" string="Salesman" domain="[]" context="{'group_by' : 'user_id'}" />
+                    <filter name="partner_id" string="Buyer" domain="[]" context="{'group_by' : 'partner_id'}" />
                 </group>
             </search>
         </field>
