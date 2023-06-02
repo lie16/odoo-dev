@@ -29,5 +29,5 @@ class EstateModel(models.Model):
     active = fields.Boolean(default=True)
     last_seen = fields.Datetime("Last Seen", default=lambda self: fields.Datetime.now())
     property_type_id = fields.Many2one("estate.property.type", String="Estate property type")
-    user_id = fields.Many2one('res.users', string='Salesman')
+    user_id = fields.Many2one('res.users', string='Salesman',  default=lambda self: self.env.user)
     partner_id = fields.Many2one("res.partner", string="Buyer")
