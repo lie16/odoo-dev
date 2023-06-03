@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <menuitem 
-        id="menu_root_estate" 
+    <menuitem
+        id="menu_root_estate"
         name="Real Estate"
     />
-        <!--  Advertisement Menu  -->
+    <!--  Advertisement Menu  -->
         <menuitem
             id="estate_advertisement_menu"
             name="Advertisement"
@@ -16,7 +16,7 @@
                 parent="estate_advertisement_menu"
                 action="estate_property_action"
             />
-        <!--  Settings Menu  -->
+    <!--  Settings Menu  -->
         <menuitem
             id="estate_setting_menu"
             name="Settings"
