@@ -7,6 +7,8 @@
             <form string="Estate Property">
                 <header>
                     <!-- TODO these part is not functional-->
+                        <button name="change_estate_state_sold" type="object" class="btn-primary" string="Sold"/>
+                        <button name="change_estate_state_canceled" type="object" class="btn-danger" string="Cancel"/>
 <!--                    <button-->
 <!--                            name="action_edit_data"-->
 <!--                            string="Edit"-->
@@ -28,7 +30,8 @@
                     </div>
                     <group>
                         <group>
-                                <field name="property_type_id" class="text-info"/>
+                            <field name="estate_state"/>
+                            <field name="property_type_id" class="text-info"/>
                             <field name="postcode"/>
                             <field name="expected_price"/>
                             <field name="best_price"/>

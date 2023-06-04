@@ -35,9 +35,9 @@ class EstatePropertyOffer(models.Model):
                 createdate = record.create_date
             else:
                 createdate = fields.Datetime.now()
-            print('Tanggal date: %s' % createdate)
+            # print('Tanggal date: %s' % createdate)
             duration =  record.date_deadline - createdate.date()
-            print('Duration: %s' % duration.days)
+            # print('Duration: %s' % duration.days)
             record.validity = duration.days
             # record.validity fields.datetime.
-            print('Validity: %s' % record.validity)
+            # print('Validity: %s' % record.validity)

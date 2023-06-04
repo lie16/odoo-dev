@@ -1,4 +1,4 @@
-from odoo import fields, models, api
+from odoo import fields, models, api, exceptions
 
 class EstateModel(models.Model):
     _name = "estate.property"
@@ -35,6 +35,7 @@ class EstateModel(models.Model):
     offer_ids = fields.One2many("estate.property.offer", "property_id", string="Offer")
     total_area = fields.Integer(compute='_compute_total_area', string="Total area (sqm)")
     best_price = fields.Float(compute='_compute_best_price', string="Best Price")
+    estate_state = fields.Char('Status')
 
     @api.depends('living_area', 'garden_area')
     def _compute_total_area(self):
@@ -58,3 +59,29 @@ class EstateModel(models.Model):
         else:
             self.garden_area = 0
             self.garden_orientation = ''
+
+    def change_estate_state_sold(self):
+        print('self = %s' % self)
+        # Loop through each record in the recordset
+        for record in self:
+            # Check if the estate state is 'Cancelled'
+            if record.estate_state == 'Cancelled':
+                # Raise an error message if it is
+                raise exceptions.UserError('Property had been cancelled')
+            else:
+                # Change the estate state to 'Sold'
+                record.estate_state='Sold'
+                return True
+
+    def change_estate_state_canceled(self):
+        print('self = %s' % self)
+        # Loop through each record in the recordset
+        for record in self:
+            # Check if the estate state is 'Cancelled'
+            if record.estate_state == 'Sold':
+                # Raise an error message if it is
+                raise exceptions.UserError('Property had been sold.')
+            else:
+                # Change the estate state to 'Sold'
+                record.estate_state='Cancelled'
+                return True
