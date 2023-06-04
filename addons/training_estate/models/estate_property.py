@@ -46,4 +46,15 @@ class EstateModel(models.Model):
         for record in self:
             if record.offer_ids:
                 record.best_price = max(record.offer_ids.mapped('price'))
-            else: record.best_price = 0.0
+            else:
+                record.best_price = 0.0
+
+    # Onchange tidak merubah nilai di database, hanya terkait dengan reactivity di form. dan hanya bisa dengan local field
+    @api.onchange("garden")
+    def _onchange_partner_id(self):
+        if self.garden:
+            self.garden_area = 10
+            self.garden_orientation = 'north'
+        else:
+            self.garden_area = 0
+            self.garden_orientation = ''
