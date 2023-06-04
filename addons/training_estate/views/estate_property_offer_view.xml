@@ -30,11 +30,12 @@
         <field name="name">estate.property.offer.tree</field>
         <field name="model">estate.property.offer</field>
         <field name="arch" type="xml">
-            <tree string="Channel">
+            <tree string="Channel" multi_edit="1" sample="1">
                 <field name="price"/>
                 <field name="partner_id"/>
+                <button name="accept" string="" class = "btn-primary" type="object" icon="fa-check" title = "Accept"/>
+                <button name="reject" string="" class = "btn-danger" type="object" icon="fa-times" title = "Refuse"/>
                 <field name="status"/>
-
             </tree>
         </field>
     </record>

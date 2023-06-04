@@ -41,3 +41,14 @@ class EstatePropertyOffer(models.Model):
             record.validity = duration.days
             # record.validity fields.datetime.
             # print('Validity: %s' % record.validity)
+
+    def accept(self):
+        for record in self:
+            record.status="y"
+            record.property_id.selling_price=record.price
+            record.property_id.partner_id=record.partner_id
+        return True
+    def reject(self):
+        for record in self:
+            record.status="n"
+        return True
