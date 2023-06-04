@@ -13,29 +13,31 @@ class EstatePropertyOffer(models.Model):
     )
     partner_id = fields.Many2one("res.partner", required=True, string="Partner")
     property_id = fields.Many2one("estate.property", required=True, string="Property")
-    validity = fields.Integer('Validity (days)', required=True, default=7)
-    date_deadline = fields.Date('Deadline', compute='_compute_validity', required=True)
-    # inverse = '_inverse_validity',
+    validity = fields.Integer('Validity (days)', required=True, default=7, stored=True)
+    date_deadline = fields.Date('Deadline', compute='_compute_validity', inverse='_inverse_validity', required=True, stored=True)
     @api.depends('validity')
     def _compute_validity(self):
         for record in self:
-            print("validity = %s" % record.validity)
             if record.create_date:
                 start_date = record.create_date
             else:
-                start_date = fields.Datetime.now()
+                start_date = fields.Datetime.now().date()
             if record.validity:
-                duration = timedelta(days=record.validity)
+                duration = record.validity
             else:
                 duration = 0
-            record.date_deadline = start_date + duration
+            # record.date_deadline = start_date + timedelta(days=duration)
+            record.date_deadline = fields.Datetime.add(start_date, days=duration)
 
-    # def _inverse_validity(self):
-    #     for record in self:
-    #         if record.create_date:
-    #             createdate = fields.Datetime.now()
-    #         else:
-    #             createdate = record.create_date
-    #         print('Tanggal date: %s' % createdate)
-    #         record.validity = record.date_deadline - createdate
-    #         print('Validity: %s' % record.validity)
+    def _inverse_validity(self):
+        for record in self:
+            if record.create_date:
+                createdate = record.create_date
+            else:
+                createdate = fields.Datetime.now()
+            print('Tanggal date: %s' % createdate)
+            duration =  record.date_deadline - createdate.date()
+            print('Duration: %s' % duration.days)
+            record.validity = duration.days
+            # record.validity fields.datetime.
+            print('Validity: %s' % record.validity)
