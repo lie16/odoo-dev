@@ -18,6 +18,12 @@ class EstatePropertyOffer(models.Model):
     property_id = fields.Many2one("estate.property", required=True, string="Property")
     validity = fields.Integer('Validity (days)', required=True, default=7, stored=True)
     date_deadline = fields.Date('Deadline', compute='_compute_validity', inverse='_inverse_validity', required=True, stored=True)
+
+    _sql_constraints = [
+        ('cek_offer_price', 'CHECK(price >= 0)',
+         'The price should be postive.')
+    ]
+
     @api.depends('validity')
     def _compute_validity(self):
         for record in self:
