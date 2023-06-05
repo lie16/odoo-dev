@@ -1,4 +1,5 @@
-from odoo import fields, models, api, exceptions
+from odoo import fields, models, api
+from odoo.exceptions import ValidationError, UserError
 
 class EstateModel(models.Model):
     _name = "estate.property"
@@ -67,7 +68,7 @@ class EstateModel(models.Model):
             # Check if the estate state is 'Cancelled'
             if record.estate_state == 'Cancelled':
                 # Raise an error message if it is
-                raise exceptions.UserError('Property had been cancelled')
+                raise UserError('Property had been cancelled')
             else:
                 # Change the estate state to 'Sold'
                 record.estate_state='Sold'
@@ -80,8 +81,14 @@ class EstateModel(models.Model):
             # Check if the estate state is 'Cancelled'
             if record.estate_state == 'Sold':
                 # Raise an error message if it is
-                raise exceptions.UserError('Property had been sold.')
+                raise UserError('Property had been sold.')
             else:
                 # Change the estate state to 'Sold'
                 record.estate_state='Cancelled'
                 return True
+
+    @api.constrains('expected_price', 'selling_price')
+    def _check_price(self):
+        for record in self:
+            if record.expected_price < 0 or record.selling_price < 0:
+                raise ValidationError("Price must be postive")

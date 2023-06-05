@@ -1,4 +1,7 @@
 from odoo import fields, models, api
+from odoo.exceptions import ValidationError
+
+
 # from datetime import datetime, timedelta
 
 class EstatePropertyOffer(models.Model):
@@ -52,3 +55,8 @@ class EstatePropertyOffer(models.Model):
         for record in self:
             record.status="n"
         return True
+    @api.constrains('price')
+    def _check_price(self):
+        for record in self:
+            if record.price < 0:
+                raise ValidationError("Offering price must be postive")
