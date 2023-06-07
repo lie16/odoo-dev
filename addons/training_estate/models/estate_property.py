@@ -1,5 +1,7 @@
 from odoo import fields, models, api
 from odoo.exceptions import ValidationError, UserError
+from odoo.tools import float_compare
+
 
 class EstateModel(models.Model):
     _name = "estate.property"
@@ -42,7 +44,7 @@ class EstateModel(models.Model):
         ('cek_expected_price', 'CHECK(expected_price >= 0)',
          'The expected price should be positive.'),
         ('cek_selling_price', 'CHECK(selling_price >= 0)',
-         'The selling price should be positive.')
+         'The selling price should be positive.'),
     ]
 
     @api.depends('living_area', 'garden_area')
@@ -99,3 +101,6 @@ class EstateModel(models.Model):
         for record in self:
             if record.expected_price < 0 or record.selling_price < 0:
                 raise ValidationError("Price must be postive")
+            # TODO rasanya bagian ini lebih pas di offer daripada disini
+            if float_compare(record.expected_price, (record.selling_price * 0.9), precision_rounding=2) == -1:
+                raise ValidationError("Offering price cannot be less than 90 % of selling price")
