@@ -19,6 +19,7 @@
         'views/estate_property_tree_view.xml',
         'views/estate_property_type_action.xml',
         'views/estate_property_type_tree_view.xml',
+        'views/estate_property_type_form_view.xml',
         'views/estate_property_views.xml',
     ],
     # data files containing optionally loaded demonstration data
