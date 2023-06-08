@@ -100,8 +100,9 @@ class EstateModel(models.Model):
     def _check_price(self):
         for record in self:
             if record.expected_price < 0 or record.selling_price < 0:
-                raise ValidationError("Price must be postive")
-            print("record.selling_price = %s" % record.selling_price)
-            if float_is_zero(record.selling_price):
-                if float_compare(record.selling_price, (record.expected_price * 0.9), precision_rounding=2) == -1:
-                    raise ValidationError("Offering price cannot be less than 90 % of selling price")
+                raise ValidationError("Price must be positive")
+            # not sure with actual usage for these
+            if record.selling_price > 0:
+                if not float_is_zero(record.selling_price, precision_rounding=2):
+                    if float_compare(record.selling_price, (record.expected_price * 0.9), precision_rounding=2) == -1:
+                        raise ValidationError("Offering price cannot be less than 90 % of selling price")

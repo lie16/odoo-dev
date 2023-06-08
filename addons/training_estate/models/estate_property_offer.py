@@ -69,7 +69,7 @@ class EstatePropertyOffer(models.Model):
             if record.price < 0:
                 raise ValidationError("Offering price must be postive")
 
-    @api.constrains('status')
+    @api.constrains('status', 'property_id.expected_price')
     def _check_status(self):
         for record in self:
             print("record.status = %s" % record.status)
