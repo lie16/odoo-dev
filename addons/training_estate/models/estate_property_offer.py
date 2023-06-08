@@ -1,6 +1,6 @@
 from odoo import fields, models, api
 from odoo.exceptions import ValidationError
-from odoo.tools import float_compare
+from odoo.tools import float_compare, float_is_zero
 
 
 # from datetime import datetime, timedelta
@@ -68,5 +68,15 @@ class EstatePropertyOffer(models.Model):
         for record in self:
             if record.price < 0:
                 raise ValidationError("Offering price must be postive")
-            # if float_compare(record.price, (record.property_id.expected_price * 0.9), precision_rounding=2) == -1:
-            #     raise ValidationError("Offering price cannot be less than 90 % of selling price")
+
+    @api.constrains('status')
+    def _check_status(self):
+        for record in self:
+            print("record.status = %s" % record.status)
+            if record.status == "y":
+                print("record.property_id.expected_price = %s" % record.property_id.expected_price)
+                print("record.property_id.selling_price = %s" % record.property_id.selling_price)
+                if float_is_zero(record.property_id.selling_price):
+                    if float_compare(record.property_id.selling_price, (record.property_id.expected_price * 0.9), precision_rounding=2) == -1:
+                    # if float_compare(record.price, (record.property_id.expected_price * 0.9), precision_rounding=2) == -1:
+                        raise ValidationError("Offering price cannot be less than 90 % of selling price")
