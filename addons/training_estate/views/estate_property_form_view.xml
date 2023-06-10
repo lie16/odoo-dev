@@ -6,7 +6,11 @@
         <field name="arch" type="xml">
             <form string="Estate Property">
                 <header>
-                        <button name="change_estate_state_sold" type="object" class="btn-primary" string="Sold"/>
+                        <button
+                                name="change_estate_state_sold" type="object"
+                                class="btn-primary" string="Sold"
+                                attrs="{'invisible': ['|', ('state', 'not in', ['canceled', 'sold']), ('id', '=', False)]}"
+                        />
                         <button name="change_estate_state_canceled" type="object" class="btn-danger" string="Cancel"/>
                         <field name="state" widget="statusbar" statusbar_visible="new,received,accepted,sold"/>
 <!--                    <button-->
