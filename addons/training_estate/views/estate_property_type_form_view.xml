@@ -11,6 +11,7 @@
                             <field name="name"/>
                         </h1>
                     </div>
+                    <field name="sequence"/>
                     <notebook colspan="4">
                         <page string="Properties">
                             <field name="property_ids">

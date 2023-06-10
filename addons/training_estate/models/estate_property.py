@@ -7,6 +7,7 @@ class EstateModel(models.Model):
     _name = "estate.property"
     # sampai baris sini sudah cukup buat bikin tabel
     _description = "Estate Property models"
+    _order = "id desc"
     name = fields.Char('Estate Name', required=True, default="Unknown")
     description = fields.Text('Description')
     postcode = fields.Char('Postcode')

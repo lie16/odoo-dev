@@ -4,7 +4,8 @@
         <field name="name">estate.property.type.tree</field>
         <field name="model">estate.property.type</field>
         <field name="arch" type="xml"> <!--These part still unknown-->
-            <tree string="Channel">
+            <tree string="Channel" multi_edit="1">
+                <field name="sequence" widget="handle"/>
                 <field name="name"/>
             </tree>
         </field>
