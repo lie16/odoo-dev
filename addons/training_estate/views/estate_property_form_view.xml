@@ -6,10 +6,9 @@
         <field name="arch" type="xml">
             <form string="Estate Property">
                 <header>
-                    <!-- TODO these part is not functional-->
                         <button name="change_estate_state_sold" type="object" class="btn-primary" string="Sold"/>
                         <button name="change_estate_state_canceled" type="object" class="btn-danger" string="Cancel"/>
-                        <field name="state" widget="statusbar"/>
+                        <field name="state" widget="statusbar" statusbar_visible="new,received,accepted,sold"/>
 <!--                    <button-->
 <!--                            name="action_edit_data"-->
 <!--                            string="Edit"-->

@@ -88,12 +88,12 @@ class EstateModel(models.Model):
         # Loop through each record in the recordset
         for record in self:
             # Check if the estate state is 'Cancelled'
-            if record.estate_state == 'Sold':
+            if record.state == 'Sold':
                 # Raise an error message if it is
                 raise UserError('Property had been sold.')
             else:
                 # Change the estate state to 'Sold'
-                record.estate_state='Cancelled'
+                record.state='Cancelled'
                 return True
 
     @api.constrains('expected_price', 'selling_price')

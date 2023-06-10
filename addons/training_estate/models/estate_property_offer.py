@@ -18,7 +18,8 @@ class EstatePropertyOffer(models.Model):
     partner_id = fields.Many2one("res.partner", required=True, string="Partner")
     property_id = fields.Many2one("estate.property", required=True, string="Property")
     validity = fields.Integer('Validity (days)', required=True, default=7, stored=True)
-    date_deadline = fields.Date('Deadline', compute='_compute_validity', inverse='_inverse_validity', required=True, stored=True)
+    date_deadline = fields.Date('Deadline', compute='_compute_validity', inverse='_inverse_validity', required=True,
+                                stored=True)
 
     _sql_constraints = [
         ('cek_offer_price', 'CHECK(price >= 0)',
@@ -46,7 +47,7 @@ class EstatePropertyOffer(models.Model):
             else:
                 createdate = fields.Datetime.now()
             # print('Tanggal date: %s' % createdate)
-            duration =  record.date_deadline - createdate.date()
+            duration = record.date_deadline - createdate.date()
             # print('Duration: %s' % duration.days)
             record.validity = duration.days
             # record.validity fields.datetime.
@@ -54,13 +55,15 @@ class EstatePropertyOffer(models.Model):
 
     def accept(self):
         for record in self:
-            record.status="y"
-            record.property_id.selling_price=record.price
-            record.property_id.partner_id=record.partner_id
+            record.status = "y"
+            record.property_id.state = "accepted"
+            record.property_id.selling_price = record.price
+            record.property_id.partner_id = record.partner_id
         return True
+
     def reject(self):
         for record in self:
-            record.status="n"
+            record.status = "n"
         return True
 
     @api.constrains('price')
@@ -72,11 +75,12 @@ class EstatePropertyOffer(models.Model):
     @api.constrains('status', 'property_id.expected_price')
     def _check_status(self):
         for record in self:
-            print("record.status = %s" % record.status)
+            # print("record.status = %s" % record.status)
             if record.status == "y":
-                print("record.property_id.expected_price = %s" % record.property_id.expected_price)
-                print("record.property_id.selling_price = %s" % record.property_id.selling_price)
-                if float_is_zero(record.property_id.selling_price):
-                    if float_compare(record.property_id.selling_price, (record.property_id.expected_price * 0.9), precision_rounding=2) == -1:
-                    # if float_compare(record.price, (record.property_id.expected_price * 0.9), precision_rounding=2) == -1:
+                # print("record.property_id.expected_price = %s" % record.property_id.expected_price)
+                # print("record.property_id.selling_price = %s" % record.property_id.selling_price)
+                if float_is_zero(record.property_id.selling_price, precision_rounding=2):
+                    if float_compare(record.property_id.selling_price, (record.property_id.expected_price * 0.9),
+                                     precision_rounding=2) == -1:
+                        # if float_compare(record.price, (record.property_id.expected_price * 0.9), precision_rounding=2) == -1:
                         raise ValidationError("Offering price cannot be less than 90 % of selling price")
