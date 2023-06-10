@@ -18,7 +18,7 @@
                                 <tree string="Properties" editable="bottom">
                                     <field name="name"/>
                                     <field name="expected_price"/>
-                                    <field name="estate_state"/>
+                                    <field name="state"/>
                                 </tree>
                             </field>
                         </page>

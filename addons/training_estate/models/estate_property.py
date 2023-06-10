@@ -28,7 +28,8 @@ class EstateModel(models.Model):
     state = fields.Selection(
         string='Status',
         selection=[('new', 'New'), ('received', 'Offer Received'), ('accepted', 'Offer Accepted'), ('sold', 'Sold'), ('canceled', 'Canceled')],
-        help="Estate condition"
+        help="Estate condition",
+        default='new'
     )
     active = fields.Boolean(default=True)
     last_seen = fields.Datetime("Last Seen", default=lambda self: fields.Datetime.now())
@@ -39,7 +40,7 @@ class EstateModel(models.Model):
     offer_ids = fields.One2many("estate.property.offer", "property_id", string="Offer")
     total_area = fields.Integer(compute='_compute_total_area', string="Total area (sqm)")
     best_price = fields.Float(compute='_compute_best_price', string="Best Price")
-    estate_state = fields.Char('Status')
+    # estate_state = fields.Char('Status')
 
     _sql_constraints = [
         ('cek_expected_price', 'CHECK(expected_price >= 0)',
@@ -76,12 +77,12 @@ class EstateModel(models.Model):
         # Loop through each record in the recordset
         for record in self:
             # Check if the estate state is 'Cancelled'
-            if record.estate_state == 'Cancelled':
+            if record.state == 'Cancelled':
                 # Raise an error message if it is
                 raise UserError('Property had been cancelled')
             else:
                 # Change the estate state to 'Sold'
-                record.estate_state='Sold'
+                record.state='Sold'
                 return True
 
     def change_estate_state_canceled(self):

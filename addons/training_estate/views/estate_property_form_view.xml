@@ -26,11 +26,11 @@
                         <h1>
                             <field name="name"/>
                         </h1>
-                        <field name="tag_ids" widget="many2many_tags"/>
+                        <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
                     </div>
                     <group>
                         <group>
-                            <field name="estate_state"/>
+<!--                            <field name="estate_state"/>-->
                             <field name="property_type_id" class="text-info"/>
                             <field name="postcode"/>
                             <field name="expected_price"/>
