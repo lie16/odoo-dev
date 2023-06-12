@@ -49,6 +49,22 @@ class EstateModel(models.Model):
          'The selling price should be positive.'),
     ]
 
+    @api.model
+    def create(self, values):
+        record = super(EstateModel, self).create(values)
+        print('value created: %s' % values)
+        # Perform your data updates here
+        return record
+
+    def write(self, values):
+        res = super(EstateModel, self).write(values)
+        print('value write: %s' % values)
+        print('self write: %s' % self)
+        print('self write: %s' % self.offer_ids )
+        print('self write: %s' % self.offer_ids.price )
+        # Perform your data updates here
+        return res
+
     @api.depends('living_area', 'garden_area')
     def _compute_total_area(self):
         for record in self:
