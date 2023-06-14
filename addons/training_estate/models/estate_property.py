@@ -86,6 +86,17 @@ class EstateModel(models.Model):
 
     @api.model
     def _compute_total_offers(self):
+        # eplanation for these part
+        # self.env['estate.property.offer']: This accesses the model estate.property.offer using the Odoo environment (self.env). It creates a recordset that represents the estate.property.offer model.
+        #
+        # .read_group(): This method performs a grouped read operation on the model estate.property.offer. It allows us to aggregate data based on specific criteria.
+        #
+        # ([('property_id', 'in', self.ids), ('status', '=', False)], ['property_id'], ['property_id']): This specifies the parameters for the grouped read operation.
+        #
+        # ('property_id', 'in', self.ids) is a domain filter that limits the records to those where the property_id is present in the current estate.property record IDs (self.ids).
+        # ('status', '=', False) further filters the records to only include those with a null status.
+        # ['property_id'] indicates the field(s) to group the data by. In this case, it groups the data by the property_id field of estate.property.offer.
+        # ['property_id'] specifies the field(s) to retrieve from the grouped data. Here, it retrieves the property_id field.
         offer_data = self.env['estate.property.offer'].read_group(
             [('property_id', 'in', self.ids), ('status', '=', False)],
             ['property_id'], ['property_id']
