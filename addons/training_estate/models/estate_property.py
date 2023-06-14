@@ -51,21 +51,51 @@ class EstateModel(models.Model):
 
     @api.model
     def create(self, values):
-        count = self.env['estate.property.offer'].search_count([('status', '!=', False), ('estate.property.offer.property_id', '=', self.id)])
-        print('count created: %s' % count)
+        if 'offer_ids' in values:
+            # Trigger the onchange method when offer_ids is updated
+            self._onchange_offer_ids_status()
+        # count = self.env['estate.property.offer'].search_count([('status', '!=', False), ('estate.property.offer.property_id', '=', self.id)])
+        # print('count created: %s' % count)
         record = super(EstateModel, self).create(values)
         print('value created: %s' % values)
         # Perform your data updates here
         return record
 
     def write(self, values):
-        count = self.env['estate.property.offer'].search_count([('status', '!=', False), ('estate.property.offer.property_id', '=', self.id)])
-        print('count write: %s' % count)
+        if 'offer_ids' in values:
+            # Trigger the onchange method when offer_ids is updated
+            self._onchange_offer_ids_status()
+        # count = self.env['estate.property.offer'].search_count([('status', '!=', False), ('estate.property.offer.property_id', '=', self.id)])
+        # print('count write: %s' % count)
         res = super(EstateModel, self).write(values)
         print('value write: %s' % values)
-        print('self write: %s' % max(self.offer_ids))
-            # Perform your data updates here
+        # print('self write: %s' % max(self.offer_ids))
+        # Perform your data updates here
         return res
+
+    @api.onchange('offer_ids.status')
+    def _onchange_offer_ids_status(self):
+        print('_onchange_offer_ids_status')
+        total_offers = self._compute_total_offers()
+        print('total_offers: %s' % total_offers)
+        for record in self:
+            if record.state == 'new' and total_offers.get(record.id, 0) > 1:
+                record.state = 'received'
+            # else:
+            #     record.state = 'new'
+
+    @api.model
+    def _compute_total_offers(self):
+        offer_data = self.env['estate.property.offer'].read_group(
+            [('property_id', 'in', self.ids), ('status', '=', False)],
+            ['property_id'], ['property_id']
+        )
+        print('offer_data: %s' % offer_data)
+        total_offers = {data['property_id'][0]: data['property_id_count'] for data in offer_data}
+        print('total_offers: %s' % total_offers)
+        return total_offers
+
+
 
     @api.depends('living_area', 'garden_area')
     def _compute_total_area(self):
