@@ -51,12 +51,16 @@ class EstateModel(models.Model):
 
     @api.model
     def create(self, values):
+        count = self.env['estate.property.offer'].search_count([('status', '!=', False), ('estate.property.offer.property_id', '=', self.id)])
+        print('count created: %s' % count)
         record = super(EstateModel, self).create(values)
         print('value created: %s' % values)
         # Perform your data updates here
         return record
 
     def write(self, values):
+        count = self.env['estate.property.offer'].search_count([('status', '!=', False), ('estate.property.offer.property_id', '=', self.id)])
+        print('count write: %s' % count)
         res = super(EstateModel, self).write(values)
         print('value write: %s' % values)
         print('self write: %s' % max(self.offer_ids))
